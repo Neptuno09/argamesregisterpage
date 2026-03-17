@@ -7,271 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #0a0510;
-            --bg-purple: #1a0b2e;
-            --accent-purple: #5a2a8e;
-            --text-main: #ffffff;
-            --text-dim: #b3a1d1;
-            --font-minecraft: 'Press Start 2P', cursive;
-            --font-sans: 'Inter', sans-serif;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: var(--font-sans);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-            padding: 40px 20px;
-        }
-
-        /* Background Effects */
-        .bg-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at center, var(--bg-purple) 0%, var(--bg-dark) 100%);
-        }
-
-        .bg-pixel-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.15;
-            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0V0zm20 20h20v20H20V20z' fill='%235a2a8e' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
-            background-size: 40px 40px;
-        }
-
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #a855f7;
-            border-radius: 50%;
-            opacity: 0;
-            animation: float 8s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(110vh) scale(1); opacity: 0; }
-            20% { opacity: 0.8; }
-            80% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-        }
-
-        /* Header Styles */
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            animation: fadeInDown 1s ease-out;
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .logo-container {
-            display: inline-block;
-            margin-bottom: 20px;
-            animation: pulse 4s infinite ease-in-out;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        h1 {
-            font-family: var(--font-minecraft);
-            font-size: clamp(2rem, 8vw, 4rem);
-            text-shadow: 0 6px 0 var(--accent-purple);
-            letter-spacing: -2px;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            font-family: var(--font-minecraft);
-            font-size: clamp(0.6rem, 2vw, 0.8rem);
-            color: #a855f7;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
-
-        /* Info Pills */
-        .info-pills {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .pill {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 8px 20px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            backdrop-filter: blur(5px);
-            transition: background 0.3s;
-        }
-
-        .pill:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .pill svg {
-            color: #a855f7;
-            width: 16px;
-            height: 16px;
-        }
-
-        /* Form Container */
-        .form-wrapper {
-            width: 100%;
-            max-width: 700px;
-            position: relative;
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        /* Minecraft Corners */
-        .corner {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            border-color: #a855f7;
-            border-style: solid;
-            z-index: 10;
-        }
-        .top-left { top: -8px; left: -8px; border-width: 4px 0 0 4px; }
-        .top-right { top: -8px; right: -8px; border-width: 4px 4px 0 0; }
-        .bottom-left { bottom: -8px; left: -8px; border-width: 0 0 4px 4px; }
-        .bottom-right { bottom: -8px; right: -8px; border-width: 0 4px 4px 0; }
-
-        .glass-panel {
-            background: rgba(20, 10, 30, 0.85);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        .panel-header {
-            background: rgba(88, 28, 135, 0.3);
-            padding: 12px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .panel-title {
-            font-family: var(--font-minecraft);
-            font-size: 10px;
-            color: #d8b4fe;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .dots {
-            display: flex;
-            gap: 6px;
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            background: rgba(168, 85, 247, 0.5);
-            border-radius: 50%;
-        }
-
-        .iframe-container {
-            position: relative;
-            width: 100%;
-            padding-top: 115%; /* Aspect ratio for the form */
-        }
-
-        iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .footer-note {
-            margin-top: 25px;
-            text-align: center;
-            color: var(--text-dim);
-            font-size: 0.85rem;
-            opacity: 0.7;
-        }
-
-        footer {
-            margin-top: 80px;
-            padding-bottom: 40px;
-            text-align: center;
-            opacity: 0.3;
-            transition: opacity 0.5s;
-        }
-
-        footer:hover {
-            opacity: 0.8;
-        }
-
-        .branding {
-            font-family: var(--font-minecraft);
-            font-size: 8px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 480px) {
-            body { padding: 20px 15px; }
-            .pill { padding: 6px 12px; font-size: 0.65rem; }
-            .iframe-container { padding-top: 150%; }
-        }
-    </style>
+    <link rel="stylesheet" href="stylesmodcolor.css">
 </head>
 <body>
     <div class="bg-container">
@@ -285,10 +21,15 @@
             <div class="subtitle">Evento de Minecraft</div>
         </div>
 
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 0;gap:4px;">
+  <h1 class="spaces-count" style="font-size:96px;font-weight:700;line-height:1;margin:0;letter-spacing:-4px;"></h1>
+><p style="font-size:13px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#888;">espacios disponibles</p>
+</div>
+        
         <div class="info-pills">
             <div class="pill">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                <span id="spaces-count">--</span> Espacios
+                <span class="spaces-count">--</span> Espacios disponibles
             </div>
             <div class="pill">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -327,7 +68,7 @@
         const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTlnJrVWLWcE6H1_8G58JiWrjBdN2MERmwNv7zCWFelcIN--NFU_XZdG6k0BN5xEyTzbomi49bHO6in/pub?gid=80156682&single=true&output=csv';
 
                 // ⚙️ AJUSTÁ ESTOS DOS VALORES según dónde está el número en tu hoja:
-        const TARGET_ROW = 6;    // Fila (empieza en 0). Fila 6 de la hoja = índice 5
+        const TARGET_ROW = 8;    // Fila (empieza en 0). Fila 6 de la hoja = índice 5
         const TARGET_COL = 0;    // Columna (empieza en 0). Columna F = índice 5
  
         // Parsea una línea CSV respetando comillas (ej: "50,00" no se rompe)
@@ -376,7 +117,7 @@
                 console.log(`[Argames] Valor leído en [${TARGET_ROW}][${TARGET_COL}]: "${value}"`);
  
                 if (value !== '') {
-                    countElement.innerText = value;
+                    document.querySelectorAll('.spaces-count').forEach(el => el.innerText = value);
                 } else {
                     console.warn('[Argames] El valor está vacío o no es un número.');
                 }
